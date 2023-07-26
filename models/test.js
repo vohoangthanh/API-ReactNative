@@ -6,6 +6,11 @@ const test = new Schema({
     date: { type: String, trim: true, },
     shift: { type: Number},
     adress: { type: String },
+    day: { type: Number },
+    dayin: { type: String },
+    subjectcode: { type: String },
+    timestart: { type: String },
+    timeend: { type: String },
     idSubject: { type: ObjectId, ref: 'subject' } ,
     idUser: { type: ObjectId, ref: 'user' } ,
 });

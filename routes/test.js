@@ -7,20 +7,19 @@ router.get('/', async function (req, res, next) {
   var dateJs = req.query.date;
   var shiftJs = req.query.shift;
   var adressJs = req.query.adress;
-  var idUserJs = req.query.idUser; 
-  var idSubjectJs = req.query.idSubject; 
-  var data = await modelTest.find({ /*date: dateJs, shift: shiftJs, adress: adressJs */}
-  , 'date shift adress idUser idSubject');
-  res.json(data);
+  var idUserJs = req.query.idUser;
+  var idSubjectJs = req.query.idSubject;
+  var data = await modelTest.find({});
+  res.json({ data });
 });
 
 // thêm lịch thi
 // http://localhost:3000/test/add
 router.post('/add', async function (req, res, next) {
   try {
-    const { date, shift, idSubject, idUser, adress } = req.body;
+    const { date, shift, idSubject, idUser, adress, day, dayin, subjectcode, timestart, timeend } = req.body;
     // tao model
-    const testInsert = { date, shift, idSubject, idUser, adress };
+    const testInsert = { date, shift, idSubject, idUser, adress, day, dayin, subjectcode, timestart, timeend };
     await modelTest.create(testInsert);
 
     res.json({ status: 1, message: ' thêm thành công' });
@@ -34,7 +33,7 @@ router.post('/add', async function (req, res, next) {
 // http://localhost:3000/test/edit
 router.post('/edit', async function (req, res, next) {
   try {
-    const {_id, date, shift, idSubject, idUser, adress } = req.body;
+    const { _id, date, shift, idSubject, idUser, adress, day, dayin, subjectcode, timestart, timeend } = req.body;
 
     var item = await modelTest.findById(_id);
     // tao model
@@ -44,6 +43,11 @@ router.post('/edit', async function (req, res, next) {
       item.idSubject = idSubject ? idSubject : item.idSubject;
       item.idUser = idUser ? idUser : item.idUser;
       item.adress = adress ? adress : item.adress;
+      item.day = day ? day : item.day;
+      item.dayin = dayin ? dayin : item.dayin;
+      item.subjectcode = subjectcode ? subjectcode : item.subjectcode;
+      item.timestart = timestart ? timestart : item.timestart;
+      item.timeend = timeend ? timeend : item.timeend;
       await item.save();
       res.json({ status: 1, message: "Sửa sản phẩm thành công" });
     }

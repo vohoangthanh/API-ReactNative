@@ -5,14 +5,8 @@ var modelSchedule = require('../models/schedule');
 // lấy lichj hoc 
 router.get('/', async function (req, res, next) {
 
-  var dateJs = req.query.date;
-  var shiftJs = req.query.shift;
-  var adressJs = req.query.adress;
-  var idUserJs = req.query.idUser;
-  var idSubjectJs = req.query.idSubject;
-  var data = await modelSchedule.find({ /*date: dateJs, shift: shiftJs, adress: adressJs */ }
-    , 'date shift adress idUser idSubject');
-  res.json(data);
+  var data = await modelSchedule.find({});
+  res.json({ data });
 });
 
 // lấy giá trị có Ca học lớn hơn bằng 1 hoặc<= 4 không phân biệt chữ hoa thường
@@ -33,9 +27,9 @@ router.get('/query', async function (req, res, next) {
 // http://localhost:3000/schedule/add
 router.post('/add', async function (req, res, next) {
   try {
-    const { date, shift, idSubject, idUser, adress } = req.body;
+    const { date, teacher, shift, idSubject, idUser, adress, day, dayin, subjectcode, timestart, timeend } = req.body;
     // tao model
-    const scheduleInsert = { date, shift, idSubject, idUser, adress };
+    const scheduleInsert = { date, shift, idSubject, idUser, teacher, adress, day, dayin, subjectcode, timestart, timeend };
     await modelSchedule.create(scheduleInsert);
 
     res.json({ status: 1, message: ' thêm thành công' });
@@ -48,7 +42,7 @@ router.post('/add', async function (req, res, next) {
 // http://localhost:3000/schedule/edit
 router.post('/edit', async function (req, res, next) {
   try {
-    const {_id, date, shift, idSubject, idUser, adress } = req.body;
+    const { _id, date, shift, idSubject, teacher, idUser, adress, day, dayin, subjectcode, timestart, timeend } = req.body;
 
     var item = await modelSchedule.findById(_id);
     // tao model
@@ -58,6 +52,12 @@ router.post('/edit', async function (req, res, next) {
       item.idSubject = idSubject ? idSubject : item.idSubject;
       item.idUser = idUser ? idUser : item.idUser;
       item.adress = adress ? adress : item.adress;
+      item.day = day ? day : item.day;
+      item.dayin = dayin ? dayin : item.dayin;
+      item.subjectcode = subjectcode ? subjectcode : item.subjectcode;
+      item.timestart = timestart ? timestart : item.timestart;
+      item.timeend = timeend ? timeend : item.timeend;
+      item.teacher = teacher ? teacher : item.teacher;
       await item.save();
       res.json({ status: 1, message: "Sửa sản phẩm thành công" });
     }
@@ -78,6 +78,8 @@ router.get("/delete", async function (req, res, next) {
     res.json({ status: 0, message: "Xóa sản phẩm thất bại", err: err });
   }
 });
+
+
 
 
 module.exports = router;
