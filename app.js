@@ -13,6 +13,7 @@ require('./models/subject');
 require('./models/new');
 require('./models/schedule');
 require('./models/test');
+require('./models/feedback');
 
 // khai báo Router
 var indexRouter = require('./routes/index');
@@ -22,6 +23,7 @@ var subjecttRouter = require('./routes/subject');
 var newRouter = require('./routes/new');
 var scheduleRouter = require('./routes/schedule');
 var testRouter = require('./routes/test');
+var feedbackRouter = require('./routes/feedback');
 
 var app = express();
 
@@ -46,11 +48,12 @@ mongoose.connect('mongodb://127.0.0.1:27017/MyFPL', {
 // cho nó đường link sử dụng
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
-app.use('/sanpham', productRouter);
 app.use('/subject', subjecttRouter);
 app.use('/new', newRouter);
 app.use('/schedule', scheduleRouter);
 app.use('/test', testRouter);
+app.use('/feedback', feedbackRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

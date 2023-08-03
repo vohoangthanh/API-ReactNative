@@ -5,6 +5,7 @@ const newS = new Schema({
     id: { type: ObjectId }, // khóa chính
     title: { type: String, trim: true, },
     content: { type: String },
-    date: { type: String }
+    date: { type: String },
+    image: { type: String }
 });
 module.exports = mongoose.models.new || mongoose.model('new', newS);
