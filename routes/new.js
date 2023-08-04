@@ -89,6 +89,18 @@ router.post('/cloudinary-upload', uploadcloudinary.single('image'), (req, res, n
   res.json({ secure_url: req.file.path });
 });
 
+router.get("/search/:id", async function (req, res, next) {
+  try {
+    const { id } = req.params;
+    const data = await modelNew.findById(id);
+    res.json({ status: 1, data });
+  } catch (err) {
+    console.error("Lỗi khi lấy chi tiết bài viết:", err);
+    res.json({ status: 0, message: "Đã xảy ra lỗi khi lấy chi tiết bài viết" });
+  }
+});
+
+
 // // up load nhiều file
 // router.post('/uploads', [upload.array('image', 9)],
 //   async (req, res, next) => {
