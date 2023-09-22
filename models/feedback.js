@@ -6,7 +6,7 @@ const feedback = new Schema({
     title: { type: String },
     date: { type: String },
     email: { type: String },
-    status: { type: Number },
+    status: { type: String },
     name: { type: String },
     mssv: { type: String },
     idUser: { type: ObjectId, ref: 'user' },

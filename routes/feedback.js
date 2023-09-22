@@ -26,7 +26,7 @@ router.post('/add', async function (req, res, next) {
   try {
     const { title, date, email, status, name, mssv, idUser } = req.body;
     // tao model
-    const FeedInsert = {  title, date, email, status, name, mssv, idUser };
+    const FeedInsert = { title, date, email, status, name, mssv, idUser };
     await modelFeedback.create(FeedInsert);
 
     res.json({ status: 1, message: ' thêm thành công' });
@@ -60,19 +60,19 @@ router.post('/edit', async function (req, res, next) {
 });
 router.post('/send-mail', async function (req, res, next) {
   try {
-    const { to,subject,content } = req.body;
+    const { to, subject, content } = req.body;
 
     const mailOptions = {
       from: "Vo Hoang Thanh<thanh270701@gmail.com",
-      to:to,
+      to: to,
       subject: subject,
       html: content
     };
     // tao model
-    
-      await sendMail.transporter.sendMail(mailOptions);
-      res.json({ status: 1, message: "Gửi mail thành công" });
-   
+
+    await sendMail.transporter.sendMail(mailOptions);
+    res.json({ status: 1, message: "Gửi mail thành công" });
+
   } catch (err) {
     res.json({ status: 0, message: "gửi mail phẩm thất bại" });
   }
